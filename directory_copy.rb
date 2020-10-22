@@ -8,10 +8,13 @@ def input_students
   # Ask what country they are from
   puts "What country are they from?"
   country = gets.chomp
-  # while the name and country is not empty, repeat this code
+  # Ask their cohort
+  puts "What cohort are they in?"
+  cohort = gets.chomp
+  # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, country: country, cohort: :november}
+    students << {name: name, country: country, cohort: cohort}
     puts "Now we have #{students.count} students"
     # get another name from the user
     puts "Please enter another name"
@@ -19,6 +22,8 @@ def input_students
     unless name.empty?
       puts "What country are they from?"
       country = gets.chomp
+      puts "What cohort are they in?"
+      cohort = gets.chomp
     end
   end
   # return the array of students
@@ -30,7 +35,15 @@ def print_header
 end
 def print(students)
   students.each do |student|
-    puts "#{student[:name]}, from #{student[:country]}, #{student[:cohort]} cohort".center(50)
+    if student[:country].empty? && student[:cohort].empty?
+      puts "#{student[:name]}, from unknown country, November cohort".center(50)
+    elsif student[:cohort].empty?
+      puts "#{student[:name]}, from #{student[:country]}, November cohort".center(50)
+    elsif student[:country].empty?
+      puts "#{student[:name]}, from unknown country, #{student[:cohort]} cohort".center(50)
+    else
+      puts "#{student[:name]}, from #{student[:country]}, #{student[:cohort]} cohort".center(50)
+    end
   end
 end
 def print_footer(students)
