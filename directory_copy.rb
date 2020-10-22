@@ -5,15 +5,21 @@ def input_students
   students = []
   # get the first name
   name = gets.chomp
-  # while the name is not empty, repeat this code
-  while !name.empty? do
+  # Ask what country they are from
+  puts "What country are they from?"
+  country = gets.chomp
+  # while the name and country is not empty, repeat this code
+  while !name.empty? && !country.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: :november}
+    students << {name: name, country: country, cohort: :november}
     puts "Now we have #{students.count} students"
     # get another name from the user
+    puts "Please enter another name"
     name = gets.chomp
+    puts "What country are they from?"
+    country = gets.chomp
   end
-  # return array of students
+  # return the array of students
   students
 end
 def print_header
@@ -21,11 +27,8 @@ def print_header
   puts "-------------"
 end
 def print(students)
-  puts "Students whose name is shorter than 12 characters:"
   students.each do |student|
-    if student[:name].length < 12
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
-    end
+    puts "#{student[:name]}, from #{student[:country]}, #{student[:cohort]} cohort"
   end
 end
 def print_footer(students)
