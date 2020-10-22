@@ -25,6 +25,13 @@ def print(students)
     puts "#{index +1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
+def print(names_starting_with_d)
+  names_starting_with_d.each do |student|
+    if student[:name].start_with?("D")
+    puts "#{student[:name]} (#{student[:cohort]})"
+    end
+  end
+end
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
