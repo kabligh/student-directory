@@ -5,25 +5,43 @@ def input_students
   students = []
   # get the first name
   name = gets.chomp
-  # Ask what country they are from
-  puts "What country are they from?"
-  country = gets.chomp
   # Ask their cohort
-  puts "What cohort are they in?"
-  cohort = gets.chomp
+  puts "What cohort month are they in? (first 3 letters)"
+  cohort = gets.chomp.capitalize.to_sym
+  months = [:Jan, :Feb, :Mar, :Apr, :May, :Jun, :Jul, :Aug, :Sep, :Oct, :Nov, :Dec]
+  # If the cohort input doesn't match a symbol in the months array
+  if !cohort.empty? && !months.include?(cohort)
+    loop do
+      puts "Incorrect spelling. Please enter the month of the cohort (first 3 letters)"
+      cohort = gets.chomp.capitalize.to_sym
+      break if months.include?(cohort)
+    end
+  end
   # while the name is not empty, repeat this code
   while !name.empty? do
+    if cohort.empty?
+      cohort = :unknown
+    end
     # add the student hash to the array
-    students << {name: name, country: country, cohort: cohort}
-    puts "Now we have #{students.count} students"
+    students << {name: name, cohort: cohort}
+    if students.length == 1
+      puts "Now we have #{students.count} student"
+    else
+      puts "Now we have #{students.count} students"
+    end
     # get another name from the user
-    puts "Please enter another name"
+    puts "Please enter another name or hit enter if no more students"
     name = gets.chomp
     unless name.empty?
-      puts "What country are they from?"
-      country = gets.chomp
       puts "What cohort are they in?"
-      cohort = gets.chomp
+      cohort = gets.chomp.capitalize.to_sym
+      if !cohort.empty? && !months.include?(cohort)
+        loop do
+          puts "Incorrect spelling. Please enter the month of the cohort (first 3 letters)"
+          cohort = gets.chomp.capitalize.to_sym
+          break if months.include?(cohort)
+        end
+      end
     end
   end
   # return the array of students
@@ -33,17 +51,10 @@ def print_header
   puts "The students of Villains Academy".center(50)
   puts "-------------".center(50)
 end
+
 def print(students)
   students.each do |student|
-    if student[:country].empty? && student[:cohort].empty?
-      puts "#{student[:name]}, from unknown country, November cohort".center(50)
-    elsif student[:cohort].empty?
-      puts "#{student[:name]}, from #{student[:country]}, November cohort".center(50)
-    elsif student[:country].empty?
-      puts "#{student[:name]}, from unknown country, #{student[:cohort]} cohort".center(50)
-    else
-      puts "#{student[:name]}, from #{student[:country]}, #{student[:cohort]} cohort".center(50)
-    end
+      puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50)
   end
 end
 def print_footer(students)
